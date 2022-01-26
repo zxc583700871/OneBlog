@@ -2,6 +2,8 @@ package com.zyd.blog.core.interceptor;
 
 import com.zyd.blog.business.consts.SessionConst;
 import com.zyd.blog.business.entity.User;
+import com.zyd.blog.business.enums.ConfigKeyEnum;
+import com.zyd.blog.business.service.SysConfigService;
 import com.zyd.blog.business.service.SysUserService;
 import com.zyd.blog.util.PasswordUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -9,10 +11,12 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -29,6 +33,10 @@ public class RememberAuthenticationInterceptor implements HandlerInterceptor {
 
     @Autowired
     private SysUserService userService;
+    @Autowired
+    private SysConfigService configService;
+    //控制台地址
+    private String mngrUrl;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -42,7 +50,7 @@ public class RememberAuthenticationInterceptor implements HandlerInterceptor {
         }
         if(!subject.isRemembered()) {
             log.warn("未设置“记住我”,跳转到登录页...");
-            response.sendRedirect(request.getContextPath() + "/passport/login");
+            response.sendRedirect(this.mngrUrl + request.getContextPath() + "/passport/login");
             return false;
         }
         try {
@@ -54,9 +62,14 @@ public class RememberAuthenticationInterceptor implements HandlerInterceptor {
             log.info("[{}] - 已自动登录", user.getUsername());
         } catch (Exception e) {
             log.error("自动登录失败", e);
-            response.sendRedirect(request.getContextPath() + "/passport/login");
+            response.sendRedirect(this.mngrUrl + request.getContextPath() + "/passport/login");
             return false;
         }
         return true;
+    }
+
+    @PostConstruct
+    public void initParam() {
+        this.mngrUrl = this.configService.getByKey(ConfigKeyEnum.CMS_URL.getKey()).getConfigValue();
     }
 }
