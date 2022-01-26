@@ -1,7 +1,7 @@
 # Server settings
 server:
     tomcat:
-        basedir: /var/tmp/oneblog/blog-web
+        basedir: /var/tmp/blog/blog-web
 # SPRING PROFILES
 spring:
     profiles:
@@ -11,7 +11,7 @@ spring:
 logging:
     config: classpath:logback-spring.xml
     file:
-      path: /var/tmp/oneblog/blog-web
+      path: /var/tmp/logs/web
 
 # braum过滤器，用于过滤恶意请求
 braum:
