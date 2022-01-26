@@ -7,7 +7,7 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     url: jdbc:mysql://${ONEBLOG_DATASOURCE_HOST:127.0.0.1}:${ONEBLOG_DATASOURCE_PORT:3306}/${ONEBLOG_DATASOURCE_DATABASE_NAME:dblog}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&useSSL=false&allowPublicKeyRetrieval=true&useLegacyDatetimeCode=false
     username: ${ONEBLOG_DATASOURCE_USERNAME:root}
-    password: ${ONEBLOG_DATASOURCE_PASSWORD:root}
+    password: ${ONEBLOG_DATASOURCE_PASSWORD:5bc057db-000708b}
 
   ####### Redis Config #######
   redis:
@@ -17,7 +17,7 @@ spring:
     # Redis服务器连接端口
     port: ${ONEBLOG_REDIS_PORT:6379}
     # Redis服务器连接密码（默认为空）
-    password: ${ONEBLOG_REDIS_PASSWORD:123456ZHYD}
+    password: ${ONEBLOG_REDIS_PASSWORD:Zsf1223}
     jedis:
       pool:
         # 连接池最大连接数（使用负值表示没有限制）
@@ -42,12 +42,12 @@ spring:
     # 指定SMTP server使用的协议，默认为: smtp
     protocol: smtp
     # 指定SMTP server host.
-    host: ${ONEBLOG_MAIL_HOST:x}
+    host: ${ONEBLOG_MAIL_HOST:smtp.qq.com}
     port: ${ONEBLOG_MAIL_PORT:465}
     # 指定SMTP server的用户名.
-    username: ${ONEBLOG_MAIL_USERNAME:x}
+    username: ${ONEBLOG_MAIL_USERNAME:906598536@qq.com}
     # 指定SMTP server登录密码:
-    password: ${ONEBLOG_MAIL_PASSWORD:x}
+    password: ${ONEBLOG_MAIL_PASSWORD:jrskcmadkaegbfif}
     # 指定是否在启动时测试邮件服务器连接，默认为false
     test-connection: false
     properties:

@@ -3,6 +3,7 @@ package com.zyd.blog.core.websocket.server;
 import com.zyd.blog.core.websocket.util.WebSocketUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
@@ -21,6 +22,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 @Slf4j
 @ServerEndpoint(value = "/console/monitor")
+@CrossOrigin("*")
 @Component
 public class ZydWebsocketServer {
 
