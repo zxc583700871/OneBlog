@@ -42,7 +42,7 @@ public class ZydWebsocketServer {
     public void onOpen(Session session) {
         webSocketSet.add(session);
         int count = onlineCount.incrementAndGet();
-        log.info("[Socket] 有链接加入，当前在线人数为: {}", count);
+        log.info("[Socket] 有连接加入，当前在线人数为: {}", count);
 
         WebSocketUtil.sendOnlineMsg(Integer.toString(count), webSocketSet);
     }

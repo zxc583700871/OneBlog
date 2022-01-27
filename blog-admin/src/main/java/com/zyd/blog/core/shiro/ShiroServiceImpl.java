@@ -58,8 +58,8 @@ public class ShiroServiceImpl implements ShiroService {
         // 配置退出过滤器,其中的具体的退出代码Shiro已经替我们实现了
         filterChainDefinitionMap.put("/passport/logout", "logout");
         filterChainDefinitionMap.put("/passport/login", "anon");
+        filterChainDefinitionMap.put("/console/monitor", "anon");
         filterChainDefinitionMap.put("/passport/signin", "anon");
-        filterChainDefinitionMap.put("/websocket", "anon");
         filterChainDefinitionMap.put("/favicon.ico", "anon");
         filterChainDefinitionMap.put("/error", "anon");
         filterChainDefinitionMap.put("/assets/**", "anon");

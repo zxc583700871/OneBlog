@@ -272,6 +272,10 @@ $(function () {
             $.websocket.open({
                 host: scheme + host + "/console/monitor",
                 reconnect: true,
+                heartbeat:{
+                    time:320000,
+                    msg:'hb'
+                },
                 callback: function (result) {
                     var resultJson = JSON.parse(result);
                     wesocketMsgResolver[resultJson["fun"]](resultJson["msg"]);

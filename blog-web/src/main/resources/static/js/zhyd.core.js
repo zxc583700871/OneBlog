@@ -89,6 +89,7 @@
     $.extend({
         websocket: {
             _this: null,
+            _heartbeatIntervalID: null,
             _initialized: false,
             init: function (options) {
                 if (!this.isSupported()) {
@@ -99,6 +100,10 @@
                     callback: function () {
                     },
                     host: null,
+                    heartbeat: {
+                        msg:'h1',
+                        time:40000
+                    },
                     reconnect: false
                 }, options);
                 if (!op.host) {
@@ -128,9 +133,20 @@
                     // console.log("接收到服务器端推送的消息：" + event.data);
                 };
 
+                //添加心跳包
+                $.websocket._heartbeatIntervalID = window.setInterval(function () {
+                    if(this._initialized){
+                        this._this.send(op.heartbeat.msg);
+                    }
+                },op.heartbeat.time)
+
                 //连接关闭的回调方法
                 this._this.onclose = function () {
                     $.websocket._initialized = false;
+                    if($.websocket._heartbeatIntervalID != null){//关闭心跳包
+                        window.clearInterval($.websocket._heartbeatIntervalID);
+                        $.websocket._heartbeatIntervalID = null;
+                    }
                     // console.log("已关闭当前链接");
                     if (op.reconnect) {
                         // 自动重连
@@ -145,6 +161,10 @@
                     callback: function () {
                     },
                     host: null,
+                    heartbeat: {
+                        msg:'h1',
+                        time:40000
+                    },
                     reconnect: false
                 }, options);
 

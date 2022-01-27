@@ -71,5 +71,6 @@ public class RememberAuthenticationInterceptor implements HandlerInterceptor {
     @PostConstruct
     public void initParam() {
         this.mngrUrl = this.configService.getByKey(ConfigKeyEnum.CMS_URL.getKey()).getConfigValue();
+        log.info("redirect url: "+this.mngrUrl);
     }
 }

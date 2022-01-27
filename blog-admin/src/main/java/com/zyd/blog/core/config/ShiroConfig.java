@@ -1,5 +1,7 @@
 package com.zyd.blog.core.config;
 
+import com.zyd.blog.business.enums.ConfigKeyEnum;
+import com.zyd.blog.business.service.SysConfigService;
 import com.zyd.blog.core.shiro.ShiroService;
 import com.zyd.blog.core.shiro.credentials.RetryLimitCredentialsMatcher;
 import com.zyd.blog.core.shiro.realm.ShiroRealm;
@@ -50,6 +52,8 @@ public class ShiroConfig {
     private RedisProperties redisProperties;
     @Autowired
     private ShiroProperties shiroProperties;
+    @Autowired
+    private SysConfigService configService;
 
     @Bean(name = "lifecycleBeanPostProcessor")
     public static LifecycleBeanPostProcessor getLifecycleBeanPostProcessor() {
@@ -81,15 +85,16 @@ public class ShiroConfig {
      */
     @Bean(name = "shiroFilter")
     public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager) {
+        String cmdUrl = configService.getByKey(ConfigKeyEnum.CMS_URL.getKey()).getConfigValue();
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         // 必须设置 SecurityManager
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         // 如果不设置默认会自动寻找Web工程根目录下的"/login.jsp"页面
-        shiroFilterFactoryBean.setLoginUrl(shiroProperties.getLoginUrl());
+        shiroFilterFactoryBean.setLoginUrl(cmdUrl+shiroProperties.getLoginUrl());
         // 登录成功后要跳转的链接
-        shiroFilterFactoryBean.setSuccessUrl(shiroProperties.getSuccessUrl());
+        shiroFilterFactoryBean.setSuccessUrl(cmdUrl+shiroProperties.getSuccessUrl());
         // 未授权界面;
-        shiroFilterFactoryBean.setUnauthorizedUrl(shiroProperties.getUnauthorizedUrl());
+        shiroFilterFactoryBean.setUnauthorizedUrl(cmdUrl+shiroProperties.getUnauthorizedUrl());
         // 配置数据库中的resource
         Map<String, String> filterChainDefinitionMap = shiroService.loadFilterChainDefinitions();
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
