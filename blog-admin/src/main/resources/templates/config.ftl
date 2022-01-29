@@ -391,16 +391,17 @@
                                                 <option value="md">Markdown 编辑器</option>
                                                 <option value="we">WangEditor 编辑器</option>
                                                 <option value="tiny">TinyMCE 编辑器</option>
+                                                <option value="textbus">textbus 编辑器</option>
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="item form-group">
+                                    <div class="item form-group tiny-editor-apikey" style="display:none;">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tinyMCEKey">TinyMCE API Key</label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <input type="text" class="form-control col-md-7 col-xs-12" name="tinyMCEKey" id="tinyMCEKey" placeholder="请输入TinyMCE API Key"/>
                                         </div>
                                     </div>
-                                    <div class="item form-group">
+                                    <div class="item form-group tiny-editor-apikey" style="display:none;">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <small>获取地址：<a href="https://www.tiny.cloud/my-account/dashboard/" target="_blank">点击获取 TinyMCE API Key</a></small>
@@ -786,6 +787,15 @@
                         },
                         error: $.alert.ajaxError
                     });
+                }
+            });
+
+            $('#articleEditor').onchange(function(){
+                var value = this.value;
+                if(value == 'tiny'){
+                    $('.tiny-editor-apikey').show();
+                }else{
+                    $('.tiny-editor-apikey').hide();
                 }
             });
 

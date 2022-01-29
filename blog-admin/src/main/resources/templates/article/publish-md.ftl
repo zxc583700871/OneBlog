@@ -1,9 +1,9 @@
 <#include "/include/macros.ftl">
 <#setting number_format="#">
 <@header>
-    <link href="https://cdn.jsdelivr.net/npm/simplemde@1.11.2/dist/simplemde.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/github-markdown-css@2.10.0/github-markdown.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/github.min.css" rel="stylesheet">
+    <link href="/assets/modules/simplemde/simplemde.min.css" rel="stylesheet">
+    <link href="/assets/css/github-markdown.min.css" rel="stylesheet">
+    <link href="/assets/css/github.min.css" rel="stylesheet">
     <style>
         .CodeMirror, .CodeMirror-scroll {
             min-height: 130px;
@@ -22,7 +22,7 @@
                     <ol class="breadcrumb">
                         <li><a href="/">首页</a></li>
                         <li><a href="/articles">文章列表</a></li>
-                        <li class="active">发布文章-<a href="https://simplemde.com/" target="_blank">Markdown 编辑器</a></li>
+                        <li class="active">发布文章-Markdown 编辑器</li>
                     </ol>
                 </@breadcrumb>
                 <div class="x_panel">
@@ -35,6 +35,7 @@
                                     <ul class="dropdown-menu" role="menu">
                                         <li><a class="changeEditor" data-href="/article/publish-we">WangEditor 编辑器</a></li>
                                         <li><a class="changeEditor" data-href="/article/publish-tiny">TinyMCE 编辑器</a></li>
+                                        <li><a class="changeEditor" data-href="/article/publish-textbus">Textbus 编辑器</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -81,8 +82,8 @@
 <@chooseImgModal></@chooseImgModal>
 <@footer>
 
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/lib/highlight.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/simplemde@1.11.2/dist/simplemde.min.js"></script>
+    <script type="text/javascript" src="/assets/js/highlight.min.js"></script>
+    <script type="text/javascript" src="/assets/modules/simplemde/simplemde.min.js"></script>
     <script type="text/javascript" src="/assets/js/inline-attachment.js"></script>
     <script type="text/javascript" src="/assets/js/codemirror.inline-attachment.js"></script>
     <script>

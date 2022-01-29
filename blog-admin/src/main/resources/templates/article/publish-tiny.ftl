@@ -22,6 +22,7 @@
                                     <ul class="dropdown-menu" role="menu">
                                         <li><a class="changeEditor" data-href="/article/publish-md">Markdown 编辑器</a></li>
                                         <li><a class="changeEditor" data-href="/article/publish-we">WangEditor 编辑器</a></li>
+                                        <li><a class="changeEditor" data-href="/article/publish-textbus">Textbus 编辑器</a></li>
                                     </ul>
                                 </li>
                             </ul>
