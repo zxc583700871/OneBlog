@@ -92,7 +92,7 @@ public class RenderController {
     @BussinessLog(value = "进入发表文章页[{1}]")
     @GetMapping("/article/publish-{type}")
     public ModelAndView publish(@PathVariable("type") String type) {
-        if (!Arrays.asList("we", "md", "tiny").contains(type)) {
+        if (!Arrays.asList("we", "md", "tiny","textbus").contains(type)) {
             throw new ZhydException("不支持的编辑器类型");
         }
         return ResultUtil.view("article/publish-" + type);
@@ -105,7 +105,7 @@ public class RenderController {
         model.addAttribute("id", id);
         Article article = articleService.getByPrimaryKey(id);
 
-        if (!Arrays.asList("we", "md", "tiny").contains(article.getEditorType())) {
+        if (!Arrays.asList("we", "md", "tiny","textbus").contains(article.getEditorType())) {
             throw new ZhydException("文章异常，未知的编辑器类型");
         }
         return ResultUtil.view("article/publish-" + article.getEditorType());

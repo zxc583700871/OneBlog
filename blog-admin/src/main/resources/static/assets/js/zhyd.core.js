@@ -8,7 +8,7 @@
  * @date 2018-04-25
  * @since 1.0
  */
-var editor = null, simplemde = null;
+var editor = null, simplemde = null,textbusEditor = null;
 
 var zhyd = window.zhyd || {
     combox: {
@@ -148,6 +148,65 @@ var zhyd = window.zhyd || {
 
         if ($("#scrolldiv")) {
             $("#scrolldiv").textSlider({line: 1, speed: 300, timer: 10000});
+        }
+    },
+    textbusEditor:{
+        defaultConfig: {
+            id: "editor",
+            uploadUrl: "",
+            uploadType: "",
+            uniqueId: "textbusEditor_1"
+        },
+        init: function (options) {
+            var $op = $.extend(zhyd.textbusEditor.defaultConfig, options);
+            textbusEditor = textbus.createEditor(document.getElementById($op.id),{
+                uploader: function(type, prevValue) {
+                    switch (type) {
+                        case 'image':
+                            var fileInput = document.createElement('input');
+                            fileInput.setAttribute('type', 'file');
+                            fileInput.setAttribute('accept', 'image/png, image/gif, image/jpeg, image/bmp, image/x-icon');
+                            fileInput.style.cssText = 'position: absolute; left: -9999px; top: -9999px; opacity: 0';
+                            var promise =  new Promise(function(resolve) {
+                                fileInput.addEventListener('change', function(event) {
+                                    var form = new FormData();
+                                    var files = event.target.files;
+                                    for(var i = 0; i < files.length; i++) {
+                                        // 这里的 file 字符串为后台接收 FormData 的字段名，可以改成自己需要的名字
+                                        form.append('file', files[i]);
+                                    }
+                                    document.body.removeChild(fileInput);
+                                    // 下面以 jQuery 为例实现上传
+                                    $.ajax({
+                                        type:"post",
+                                        url: $op.uploadUrl,
+                                        data: form,
+                                        dataType: 'json',
+                                        contentType:false,
+                                        processData: false,
+                                        success: function(response){
+                                            if (response.status == 200) {
+                                                resolve(response.data)
+                                            }
+                                        },
+                                        error: function() {
+                                            console.log('上传失败！');
+                                        }
+                                    })
+                                })
+                            });
+                            document.body.appendChild(fileInput);
+                            fileInput.click();
+                            return promise;
+                        // case 'video':
+                        //   console.log('上传视频');
+                        //   break;
+                        // case 'audio':
+                        //   console.log('上传音频');
+                        //   break;
+                    }
+                }
+            });
         }
     },
     wangEditor: {

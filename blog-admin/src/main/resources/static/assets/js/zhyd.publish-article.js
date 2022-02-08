@@ -64,6 +64,15 @@ if(articleId){
                         }
                     }
                 }
+                if(editorType === 'textbus') {
+                    contentHtml = info['content'];
+                    if(contentHtml){
+                        $("#content").val(contentHtml);
+                        if(textbusEditor){
+                            textbusEditor.setContents(contentHtml);
+                        }
+                    }
+                }
                 $publishForm.find("input[type!=checkbox], select, textarea").each(function () {
                     new Table().clearText($(this), this.type, info);
                 });
@@ -100,6 +109,10 @@ $(".publishBtn").click(function () {
         }
         if(editorType === 'tiny') {
             $("#content").val(zhyd.tinymce.getHtml());
+        }
+        if(editorType === 'textbus') {
+            let contents = textbusEditor.getContents();
+            $("#content").val(contents.content);
         }
 
         $publishForm.ajaxSubmit({

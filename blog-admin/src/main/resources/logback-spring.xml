@@ -2,7 +2,7 @@
 <configuration>
     <!--定义日志文件的存储路径-->
     <!--<property name="LOG_HOME" value="/var/tmp/website-blog-admin"/>-->
-    <springProperty scope="context" name="logdir" source="logging.path"/>
+    <springProperty scope="context" name="logdir" source="logging.file.path"/>
 
     <!-- 控制台 appender -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
@@ -30,6 +30,7 @@
 
     <logger name="org.springframework.core.env" level="INFO"/>
     <logger name="us.codecraft.webmagic.downloader" level="INFO"/>
+    <logger name="com.zyd.blog" level="WARN"/>
     <logger name="com.zyd.blog.framework.runner" level="DEBUG"/>
     <logger name="org.crazycake.shiro.RedisCache" level="INFO"/>
 

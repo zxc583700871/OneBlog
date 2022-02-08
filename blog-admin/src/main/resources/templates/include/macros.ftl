@@ -9,13 +9,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>${config.siteName}后台管理系统</title>
     <link href="/assets/images/favicon.ico" rel="shortcut icon" type="image/x-icon">
-    <link href="/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="/assets/modules/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/modules/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="/assets/modules/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="/assets/css/jquery-confirm-3.3.2.min.css" rel="stylesheet">
     <link href="/assets/css/jquery.fancybox.min.css" rel="stylesheet">
     <link href="/assets/css/nprogress.min.css" rel="stylesheet">
-    <link href="/assets/css/toastr.min.css" rel="stylesheet">
-    <link href="/assets/css/green.min.css" rel="stylesheet">
+    <link href="/assets/modules/toastr/toastr.min.css" rel="stylesheet">
+    <link href="/assets/modules/icheck-1.0.3/skins/square/green.css" rel="stylesheet">
     <link href="/assets/modules/bootstrap/bootstrap-table.min.css" rel="stylesheet">
     <link href="/assets/css/daterangepicker.min.css" rel="stylesheet">
     <link href="/assets/modules/bootstrap/bootstrap-datetimepicker.min.css" rel="stylesheet">
