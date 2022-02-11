@@ -21,6 +21,7 @@ import java.util.List;
 public class Article {
     private final BizArticle bizArticle;
     private Boolean isPrivate;
+    private boolean hasUnlimit = false;
 
     public Article() {
         this.bizArticle = new BizArticle();
@@ -76,6 +77,15 @@ public class Article {
         this.bizArticle.setQrcodePath(qrcodePath);
     }
 
+    @JsonIgnore
+    public boolean isHasUnlimit() {
+        return hasUnlimit;
+    }
+
+    public void setHasUnlimit(boolean hasUnlimit) {
+        this.hasUnlimit = hasUnlimit;
+    }
+
     @Deprecated
     public boolean getIsMarkdown() {
         Boolean value = this.bizArticle.getIsMarkdown();
@@ -107,6 +117,10 @@ public class Article {
         Boolean value = this.bizArticle.getTop();
         return value != null ? value : false;
     }
+
+    public boolean getIsOpen(){return this.bizArticle.getIsOpen();}
+
+    public void setIsOpen(boolean isOpen){this.bizArticle.setIsOpen(isOpen);}
 
     public void setTop(boolean top) {
         this.bizArticle.setTop(top);

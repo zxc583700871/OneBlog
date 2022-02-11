@@ -74,7 +74,7 @@ public interface BizArticleService extends AbstractService<Article, Long> {
      * @param insertTime
      * @return
      */
-    Map<String, Article> getPrevAndNextArticles(Date insertTime);
+    Map<String, Article> getPrevAndNextArticles(Date insertTime,boolean hasUnlimit);
 
     /**
      * 文章点赞

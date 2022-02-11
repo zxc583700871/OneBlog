@@ -23,6 +23,7 @@ public class ArticleConditionVO extends BaseConditionVO {
 	private Long tagId;
 	private Integer status;
 	private Boolean top;
+	private boolean hasUnlimit = false;//是否无限制浏览
 	private Boolean recommended;
 	private Boolean original;
 	private Boolean random;

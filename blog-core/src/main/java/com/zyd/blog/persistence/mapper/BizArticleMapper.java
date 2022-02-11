@@ -48,9 +48,10 @@ public interface BizArticleMapper extends BaseMapper<BizArticle> {
      * 获取上一篇和下一篇(是否可以通过get时查出来？ BizArticle中关联两个BizArticle：prev & next)
      *
      * @param insertTime
+     * @param  hasUnlimit
      * @return
      */
-    List<BizArticle> getPrevAndNextArticles(Date insertTime);
+    List<BizArticle> getPrevAndNextArticles(@Param("insertTime") Date insertTime,@Param("hasUnlimit")boolean hasUnlimit);
 
     /**
      * 获取热门文章

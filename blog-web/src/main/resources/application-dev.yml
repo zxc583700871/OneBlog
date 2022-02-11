@@ -29,3 +29,5 @@ app:
     # 代码请参考
     enabledPrintConfig: ${ONEBLOG_APP_ENABLE_PRINT_CONFIG:false}
 ####################################自定义配置##########################################
+system:
+  unlimitedCode: 3

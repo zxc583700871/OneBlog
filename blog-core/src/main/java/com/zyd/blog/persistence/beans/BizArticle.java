@@ -40,6 +40,7 @@ public class BizArticle extends AbstractDO {
     private String password;
     private Boolean requiredAuth;
     private String editorType;
+    private Boolean isOpen;
     @Transient
     private Integer lookCount;
     @Transient

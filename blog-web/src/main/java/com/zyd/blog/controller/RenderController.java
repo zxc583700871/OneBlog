@@ -14,10 +14,12 @@ import com.zyd.blog.business.vo.ArticleConditionVO;
 import com.zyd.blog.util.ResultUtil;
 import com.zyd.blog.util.SessionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -49,6 +51,8 @@ public class RenderController {
     private SysLinkService sysLinkService;
     @Autowired
     private SysUpdateRecordeService updateRecordeService;
+    @Value("${system.unlimitedCode}")
+    private String unlimitCode;
 
     /**
      * 加载首页的数据
@@ -74,8 +78,10 @@ public class RenderController {
      */
     @RequestMapping("/")
     @BussinessLog(value = "进入首页", platform = PlatformEnum.WEB)
-    public ModelAndView home(ArticleConditionVO vo, Model model) {
+    public ModelAndView home(ArticleConditionVO vo,
+                             @RequestHeader(value="blog-uc",required = false) String requestUnlimitCode, Model model) {
         model.addAttribute("url", INDEX_URL);
+        vo.setHasUnlimit(unlimitCode.equals(requestUnlimitCode));//非公开权限
         loadIndexPage(vo, model);
 
         return ResultUtil.view(INDEX_URL);
@@ -91,9 +97,11 @@ public class RenderController {
      */
     @RequestMapping("/index/{pageNumber}")
     @BussinessLog(value = "进入文章列表第{1}页", platform = PlatformEnum.WEB)
-    public ModelAndView type(@PathVariable("pageNumber") Integer pageNumber, ArticleConditionVO vo, Model model) {
+    public ModelAndView type(@PathVariable("pageNumber") Integer pageNumber,
+                             @RequestHeader(value="blog-uc",required = false) String requestUnlimitCode, ArticleConditionVO vo, Model model) {
         vo.setPageNumber(pageNumber);
         model.addAttribute("url", INDEX_URL);
+        vo.setHasUnlimit(unlimitCode.equals(requestUnlimitCode));//非公开权限
         loadIndexPage(vo, model);
 
         return ResultUtil.view(INDEX_URL);
@@ -108,10 +116,12 @@ public class RenderController {
      */
     @GetMapping("/type/{typeId}")
     @BussinessLog(value = "进入文章分类[{1}]列表页", platform = PlatformEnum.WEB)
-    public ModelAndView type(@PathVariable("typeId") Long typeId, Model model) {
+    public ModelAndView type(@PathVariable("typeId") Long typeId,
+                             @RequestHeader(value="blog-uc",required = false) String requestUnlimitCode, Model model) {
         ArticleConditionVO vo = new ArticleConditionVO();
         vo.setTypeId(typeId);
         model.addAttribute("url", "type/" + typeId);
+        vo.setHasUnlimit(unlimitCode.equals(requestUnlimitCode));//非公开权限
         loadIndexPage(vo, model);
 
         return ResultUtil.view(INDEX_URL);
@@ -127,11 +137,13 @@ public class RenderController {
      */
     @GetMapping("/type/{typeId}/{pageNumber}")
     @BussinessLog(value = "进入文章分类[{1}]列表第{2}页", platform = PlatformEnum.WEB)
-    public ModelAndView type(@PathVariable("typeId") Long typeId, @PathVariable("pageNumber") Integer pageNumber, Model model) {
+    public ModelAndView type(@PathVariable("typeId") Long typeId,
+                             @RequestHeader(value="blog-uc",required = false) String requestUnlimitCode, @PathVariable("pageNumber") Integer pageNumber, Model model) {
         ArticleConditionVO vo = new ArticleConditionVO();
         vo.setTypeId(typeId);
         vo.setPageNumber(pageNumber);
         model.addAttribute("url", "type/" + typeId);
+        vo.setHasUnlimit(unlimitCode.equals(requestUnlimitCode));//非公开权限
         loadIndexPage(vo, model);
 
         return ResultUtil.view(INDEX_URL);
@@ -146,10 +158,12 @@ public class RenderController {
      */
     @GetMapping("/tag/{tagId}")
     @BussinessLog(value = "进入文章标签[{1}]列表页", platform = PlatformEnum.WEB)
-    public ModelAndView tag(@PathVariable("tagId") Long tagId, Model model) {
+    public ModelAndView tag(@PathVariable("tagId") Long tagId,
+                            @RequestHeader(value="blog-uc",required = false) String requestUnlimitCode, Model model) {
         ArticleConditionVO vo = new ArticleConditionVO();
         vo.setTagId(tagId);
         model.addAttribute("url", "tag/" + tagId);
+        vo.setHasUnlimit(unlimitCode.equals(requestUnlimitCode));//非公开权限
         loadIndexPage(vo, model);
 
         return ResultUtil.view(INDEX_URL);
@@ -165,11 +179,14 @@ public class RenderController {
      */
     @GetMapping("/tag/{tagId}/{pageNumber}")
     @BussinessLog(value = "进入文章标签[{1}]列表第{2}页", platform = PlatformEnum.WEB)
-    public ModelAndView tag(@PathVariable("tagId") Long tagId, @PathVariable("pageNumber") Integer pageNumber, Model model) {
+    public ModelAndView tag(@PathVariable("tagId") Long tagId, @PathVariable("pageNumber") Integer pageNumber,
+                            @RequestHeader(value="blog-uc",required = false) String requestUnlimitCode, Model model) {
         ArticleConditionVO vo = new ArticleConditionVO();
         vo.setTagId(tagId);
         vo.setPageNumber(pageNumber);
         model.addAttribute("url", "tag/" + tagId);
+
+        vo.setHasUnlimit(unlimitCode.equals(requestUnlimitCode));//非公开权限
         loadIndexPage(vo, model);
 
         return ResultUtil.view(INDEX_URL);
@@ -184,9 +201,13 @@ public class RenderController {
      */
     @GetMapping("/article/{articleId}")
     @BussinessLog(value = "进入文章[{2}]详情页", platform = PlatformEnum.WEB)
-    public ModelAndView article(Model model, @PathVariable("articleId") Long articleId) {
+    public ModelAndView article(Model model, @PathVariable("articleId") Long articleId,@RequestHeader(value="blog-uc",required = false) String requestUnlimitCode) {
         Article article = bizArticleService.getByPrimaryKey(articleId);
         if (article == null || ArticleStatusEnum.UNPUBLISHED.getCode() == article.getStatusEnum().getCode()) {
+            return ResultUtil.forward("/error/404");
+        }
+        boolean hasUnlimit = unlimitCode.equals(requestUnlimitCode);//非公开权限
+        if(!article.getIsOpen() && !hasUnlimit){//非公开权限
             return ResultUtil.forward("/error/404");
         }
         if (article.getPrivate()) {
@@ -202,7 +223,8 @@ public class RenderController {
         }
         model.addAttribute("article", article);
         // 上一篇下一篇
-        model.addAttribute("other", bizArticleService.getPrevAndNextArticles(article.getCreateTime()));
+        model.addAttribute("other", bizArticleService.getPrevAndNextArticles(article.getCreateTime(),hasUnlimit));
+        article.setHasUnlimit(hasUnlimit);
         // 相关文章
         model.addAttribute("relatedList", bizArticleService.listRelatedArticle(SIDEBAR_ARTICLE_SIZE, article));
         model.addAttribute("articleDetail", true);

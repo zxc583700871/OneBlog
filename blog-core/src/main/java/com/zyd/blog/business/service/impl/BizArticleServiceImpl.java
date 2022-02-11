@@ -175,6 +175,7 @@ public class BizArticleServiceImpl implements BizArticleService {
         }
         vo.setTypeId(article.getTypeId());
         vo.setPageSize(pageSize);
+        vo.setHasUnlimit(article.isHasUnlimit());
         PageInfo pageInfo = this.findPageBreakByCondition(vo);
         return null == pageInfo ? null : pageInfo.getList();
     }
@@ -185,9 +186,9 @@ public class BizArticleServiceImpl implements BizArticleService {
      * @return
      */
     @Override
-    public Map<String, Article> getPrevAndNextArticles(Date insertTime) {
+    public Map<String, Article> getPrevAndNextArticles(Date insertTime,boolean hasUnlimit) {
         insertTime = null == insertTime ? new Date() : insertTime;
-        List<BizArticle> entityList = bizArticleMapper.getPrevAndNextArticles(insertTime);
+        List<BizArticle> entityList = bizArticleMapper.getPrevAndNextArticles(insertTime,hasUnlimit);
         if (CollectionUtils.isEmpty(entityList)) {
             return null;
         }
