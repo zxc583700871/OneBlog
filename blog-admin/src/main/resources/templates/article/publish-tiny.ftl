@@ -67,6 +67,13 @@
 </div>
 <@chooseImgModal></@chooseImgModal>
 <@footer>
+    <#--<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js"></script>-->
+    <#if config.tinyMCEKey?exists>
+        <script src="https://cdn.tiny.cloud/1/${config.tinyMCEKey!}/tinymce/5/tinymce.min.js"
+                referrerpolicy="origin"></script>
+    <#else>
+        <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js"></script>
+    </#if>
     <script>
         zhyd.tinymce.init({
             selector: "#tinyEditor",

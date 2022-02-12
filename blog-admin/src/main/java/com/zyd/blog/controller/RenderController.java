@@ -132,6 +132,13 @@ public class RenderController {
         return ResultUtil.view("link/list");
     }
 
+    @RequiresPermissions("servers")
+    @BussinessLog("进入服务器页")
+    @GetMapping("/servers")
+    public ModelAndView servers() {
+        return ResultUtil.view("server/list");
+    }
+
     @RequiresPermissions("comments")
     @BussinessLog("进入评论页")
     @GetMapping("/comments")

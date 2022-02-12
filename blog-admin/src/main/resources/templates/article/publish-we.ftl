@@ -67,6 +67,7 @@
 </form>
 <@chooseImgModal></@chooseImgModal>
 <@footer>
+    <script src="/assets/js/wangEditor.min.js" type="text/javascript"></script>
     <script>
         articleId = '${id}';
         editorType = 'we';

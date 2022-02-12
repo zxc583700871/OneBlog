@@ -79,7 +79,7 @@
 </div>
 <@chooseImgModal></@chooseImgModal>
 <@footer>
-
+    <script src="/assets/modules/textbus-1.1.0/textbus.min.js"></script>
     <script type="text/javascript" src="/assets/js/highlight.min.js"></script>
     <script type="text/javascript" src="/assets/modules/simplemde/simplemde.min.js"></script>
     <script type="text/javascript" src="/assets/js/inline-attachment.js"></script>
